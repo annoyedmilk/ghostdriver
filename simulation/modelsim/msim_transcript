@@ -1,0 +1,67 @@
+# Reading C:/altera/13.1/modelsim_ase/tcl/vsim/pref.tcl 
+# ERROR: No extended dataflow license exists
+# do racegame_run_msim_rtl_vhdl.do 
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Modifying C:\altera\13.1\modelsim_ase\win32aloem/../modelsim.ini
+# 
+# vlog -vlog01compat -work work +incdir+C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/db {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/db/pll_altpll.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module pll_altpll
+# 
+# Top level modules:
+# 	pll_altpll
+# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/debouncer.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity debouncer
+# -- Compiling architecture rtl of debouncer
+# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/hvsync_generator.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity hvsync_generator
+# -- Compiling architecture Behavioral of hvsync_generator
+# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/pll.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity pll
+# -- Compiling architecture SYN of pll
+# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_control.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity car_control
+# -- Compiling architecture Behavioral of car_control
+# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/track_obstacle.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity track_obstacle
+# -- Compiling architecture Behavioral of track_obstacle
+# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/racegame_top.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity racegame_top
+# -- Compiling architecture rtl of racegame_top
+# -- Loading entity pll
+# 
