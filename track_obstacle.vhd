@@ -9,7 +9,6 @@ entity track_obstacle is
         car_pos_x    : in  std_logic_vector(9 downto 0); -- Car's horizontal position
         hpos         : in  unsigned(9 downto 0); -- Horizontal position
         vpos         : in  unsigned(9 downto 0); -- Vertical position
-        track_color  : out std_logic_vector(11 downto 0); -- Track color
         obstacle_hit : out std_logic  -- Obstacle hit signal
     );
 end track_obstacle;
@@ -71,38 +70,6 @@ begin
                     collision_detected <= '1';
                 end if;
             end loop;
-        end if;
-    end process;
-
-    process(clk)
-    begin
-        if rising_edge(clk) then
-            if reset = '0' or collision_detected = '1' then
-                if collision_detected = '1' then
-                    track_color <= "111100000000"; -- Red for collision
-                else
-                    track_color <= "000000000000"; -- Black
-                end if;
-            else
-                if unsigned(hpos) < 80 or unsigned(hpos) > 560 then
-                    -- Light gray borders (left and right)
-                    track_color <= "011101110111"; -- RGB(7, 7, 7)
-                elsif unsigned(hpos) >= 310 and unsigned(hpos) <= 330 then
-                    -- Yellow stripe in the middle
-                    track_color <= "111111110000"; -- RGB(15, 15, 0)
-                else
-                    -- Dark road
-                    track_color <= "001100110011"; -- RGB(3, 3, 3)
-                end if;
-
-                -- Check if we are in an obstacle
-                for i in 0 to 3 loop
-                    if unsigned(hpos) >= obstacle_x(i) and unsigned(hpos) < obstacle_x(i) + to_unsigned(OBSTACLE_WIDTH, 10) and
-                       unsigned(vpos) >= obstacle_y(i) and unsigned(vpos) < obstacle_y(i) + to_unsigned(OBSTACLE_HEIGHT, 10) then
-                        track_color <= "111100000000"; -- Red for obstacles
-                    end if;
-                end loop;
-            end if;
         end if;
     end process;
 

@@ -2,6 +2,11 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+-- Import the car graphic data
+library work;
+use work.red_car_graphic.all;
+use work.street_image_graphic.all;
+
 entity racegame_top is
     generic (
         USE_PLL : boolean := true
@@ -58,10 +63,10 @@ architecture rtl of racegame_top is
         port (
             clk          : in  std_logic;         -- Clock input
             reset        : in  std_logic;         -- Reset signal
-            hpos         : in  std_logic_vector(9 downto 0); -- Horizontal position from VGA controller
-            vpos         : in  std_logic_vector(9 downto 0); -- Vertical position from VGA controller
-            track_color  : out std_logic_vector(11 downto 0); -- RGB color output for the track
-            obstacle_hit : out std_logic         -- Signal indicating a collision
+            car_pos_x    : in  std_logic_vector(9 downto 0); -- Car's horizontal position
+            hpos         : in  unsigned(9 downto 0); -- Horizontal position
+            vpos         : in  unsigned(9 downto 0); -- Vertical position
+            obstacle_hit : out std_logic          -- Signal indicating a collision
         );
     end component;
 
@@ -76,11 +81,7 @@ architecture rtl of racegame_top is
     signal btn_right_clean : std_logic;
 
     signal car_pos_x : std_logic_vector(9 downto 0);
-    signal track_color : std_logic_vector(11 downto 0);
     signal obstacle_hit : std_logic;
-
-    -- Import the car graphic data
-    use work.red_car_graphic.all;
 
 begin
     PLL: if USE_PLL generate -- executed during Quartus compilation
@@ -136,9 +137,9 @@ begin
         port map (
             clk          => clk,
             reset        => reset,
-            hpos         => hpos,
-            vpos         => vpos,
-            track_color  => track_color,
+            car_pos_x    => car_pos_x,
+            hpos         => unsigned(hpos),
+            vpos         => unsigned(vpos),
             obstacle_hit => obstacle_hit
         );
 
@@ -161,18 +162,18 @@ begin
 
             if display_on = '1' then
                 -- Render track
-                rgb_r <= track_color(11 downto 8);
-                rgb_g <= track_color(7 downto 4);
-                rgb_b <= track_color(3 downto 0);
+                rgb_r <= STREET_IMAGE(to_integer(unsigned(vpos)), to_integer(unsigned(hpos)))(11 downto 8);
+                rgb_g <= STREET_IMAGE(to_integer(unsigned(vpos)), to_integer(unsigned(hpos)))(7 downto 4);
+                rgb_b <= STREET_IMAGE(to_integer(unsigned(vpos)), to_integer(unsigned(hpos)))(3 downto 0);
 
                 -- Render car on top of the track
-            if unsigned(hpos) >= unsigned(car_pos_x) and unsigned(hpos) < unsigned(car_pos_x) + car_width and
-               unsigned(vpos) >= 390 and unsigned(vpos) < 390 + car_height then
-                -- Draw car using the RED_CAR_IMAGE
-                rgb_r <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(11 downto 8);
-                rgb_g <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(7 downto 4);
-                rgb_b <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(3 downto 0);
-            end if;
+                if unsigned(hpos) >= unsigned(car_pos_x) and unsigned(hpos) < unsigned(car_pos_x) + car_width and
+                   unsigned(vpos) >= 390 and unsigned(vpos) < 390 + car_height then
+                    -- Draw car using the RED_CAR_IMAGE
+                    rgb_r <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(11 downto 8);
+                    rgb_g <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(7 downto 4);
+                    rgb_b <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(3 downto 0);
+                end if;
 
                 -- Handle collision
                 if obstacle_hit = '1' then

@@ -41,7 +41,7 @@ def convert_image_to_vhdl(image_path, output_path, constant_name):
         f.write(f"end package;\n")
 
 # Directories for input and output
-input_dir = 'original'
+input_dir = 'original'  # Adjusted for the environment
 output_image_dir = '4-bit'
 output_vhdl_dir = 'VHDL'
 
