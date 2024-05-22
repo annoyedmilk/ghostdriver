@@ -79,6 +79,9 @@ architecture rtl of racegame_top is
     signal track_color : std_logic_vector(11 downto 0);
     signal obstacle_hit : std_logic;
 
+    -- Import the car graphic data
+    use work.red_car_graphic.all;
+
 begin
     PLL: if USE_PLL generate -- executed during Quartus compilation
         pll1: entity work.pll
@@ -163,13 +166,13 @@ begin
                 rgb_b <= track_color(3 downto 0);
 
                 -- Render car on top of the track
-                if unsigned(hpos) >= unsigned(car_pos_x) and unsigned(hpos) < unsigned(car_pos_x) + 20 and
-                   unsigned(vpos) >= 440 and unsigned(vpos) < 460 then
-                    -- Draw car as a white rectangle
-                    rgb_r <= x"F";
-                    rgb_g <= x"F";
-                    rgb_b <= x"F";
-                end if;
+            if unsigned(hpos) >= unsigned(car_pos_x) and unsigned(hpos) < unsigned(car_pos_x) + car_width and
+               unsigned(vpos) >= 390 and unsigned(vpos) < 390 + car_height then
+                -- Draw car using the RED_CAR_IMAGE
+                rgb_r <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(11 downto 8);
+                rgb_g <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(7 downto 4);
+                rgb_b <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(3 downto 0);
+            end if;
 
                 -- Handle collision
                 if obstacle_hit = '1' then
