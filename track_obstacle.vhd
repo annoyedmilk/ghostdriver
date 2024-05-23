@@ -9,16 +9,21 @@ entity track_obstacle is
         car_pos_x    : in  std_logic_vector(9 downto 0); -- Car's horizontal position
         hpos         : in  unsigned(9 downto 0); -- Horizontal position
         vpos         : in  unsigned(9 downto 0); -- Vertical position
-        obstacle_hit : out std_logic  -- Obstacle hit signal
+        obstacle_hit : out std_logic;  -- Obstacle hit signal
+        rgb_r        : out std_logic_vector(3 downto 0); -- 4-bit red output
+        rgb_g        : out std_logic_vector(3 downto 0); -- 4-bit green output
+        rgb_b        : out std_logic_vector(3 downto 0)  -- 4-bit blue output
     );
 end track_obstacle;
 
 architecture Behavioral of track_obstacle is
-    constant OBSTACLE_WIDTH  : integer := 40;
-    constant OBSTACLE_HEIGHT : integer := 40;
-    constant CAR_WIDTH : integer := 50;  -- Increase hitbox width for the car
-    constant CAR_HEIGHT : integer := 50; -- Increase hitbox height for the car
-    constant CAR_Y_POSITION : unsigned(9 downto 0) := to_unsigned(400, 10); -- Car's vertical position
+    use work.blue_car_graphic.all;  -- Use the blue car graphic package
+
+    constant OBSTACLE_WIDTH  : integer := blue_car_width;
+    constant OBSTACLE_HEIGHT : integer := blue_car_height;
+    constant CAR_WIDTH       : integer := 50;  -- Increase hitbox width for the car
+    constant CAR_HEIGHT      : integer := 50;  -- Increase hitbox height for the car
+    constant CAR_Y_POSITION  : unsigned(9 downto 0) := to_unsigned(400, 10); -- Car's vertical position
     constant SLOW_DOWN_FACTOR : integer := 200000; -- Reduce to make obstacles move faster
 
     type obstacle_array is array (0 to 3) of unsigned(9 downto 0);
@@ -68,6 +73,27 @@ begin
                 if unsigned(car_pos_x) + to_unsigned(CAR_WIDTH, 10) >= obstacle_x(i) and unsigned(car_pos_x) <= obstacle_x(i) + to_unsigned(OBSTACLE_WIDTH, 10) and
                    CAR_Y_POSITION + to_unsigned(CAR_HEIGHT, 10) >= obstacle_y(i) and CAR_Y_POSITION <= obstacle_y(i) + to_unsigned(OBSTACLE_HEIGHT, 10) then
                     collision_detected <= '1';
+                end if;
+            end loop;
+        end if;
+    end process;
+
+    -- Render obstacles (blue car) on top of the track
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            -- Default to black
+            rgb_r <= x"0";               
+            rgb_g <= x"0";
+            rgb_b <= x"0";
+
+            for i in 0 to 3 loop
+                if unsigned(hpos) >= obstacle_x(i) and unsigned(hpos) < obstacle_x(i) + OBSTACLE_WIDTH and
+                   unsigned(vpos) >= obstacle_y(i) and unsigned(vpos) < obstacle_y(i) + OBSTACLE_HEIGHT then
+                    -- Draw blue car obstacle
+                    rgb_r <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(11 downto 8);
+                    rgb_g <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(7 downto 4);
+                    rgb_b <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(3 downto 0);
                 end if;
             end loop;
         end if;

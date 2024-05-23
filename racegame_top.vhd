@@ -6,6 +6,7 @@ use ieee.numeric_std.all;
 library work;
 use work.red_car_graphic.all;
 use work.street_image_graphic.all;
+use work.blue_car_graphic.all;
 
 entity racegame_top is
     generic (
@@ -66,7 +67,10 @@ architecture rtl of racegame_top is
             car_pos_x    : in  std_logic_vector(9 downto 0); -- Car's horizontal position
             hpos         : in  unsigned(9 downto 0); -- Horizontal position
             vpos         : in  unsigned(9 downto 0); -- Vertical position
-            obstacle_hit : out std_logic          -- Signal indicating a collision
+            obstacle_hit : out std_logic;         -- Signal indicating a collision
+            rgb_r        : out std_logic_vector(3 downto 0); -- 4-bit red output
+            rgb_g        : out std_logic_vector(3 downto 0); -- 4-bit green output
+            rgb_b        : out std_logic_vector(3 downto 0)  -- 4-bit blue output
         );
     end component;
 
@@ -82,6 +86,9 @@ architecture rtl of racegame_top is
 
     signal car_pos_x : std_logic_vector(9 downto 0);
     signal obstacle_hit : std_logic;
+    signal obs_rgb_r : std_logic_vector(3 downto 0);
+    signal obs_rgb_g : std_logic_vector(3 downto 0);
+    signal obs_rgb_b : std_logic_vector(3 downto 0);
 
 begin
     PLL: if USE_PLL generate -- executed during Quartus compilation
@@ -140,7 +147,10 @@ begin
             car_pos_x    => car_pos_x,
             hpos         => unsigned(hpos),
             vpos         => unsigned(vpos),
-            obstacle_hit => obstacle_hit
+            obstacle_hit => obstacle_hit,
+            rgb_r        => obs_rgb_r,
+            rgb_g        => obs_rgb_g,
+            rgb_b        => obs_rgb_b
         );
 
     -- Synchronize button inputs to the clock
@@ -173,6 +183,13 @@ begin
                     rgb_r <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(11 downto 8);
                     rgb_g <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(7 downto 4);
                     rgb_b <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(3 downto 0);
+                end if;
+
+                -- Render obstacles on top of the car and track
+                if obs_rgb_r /= x"0" or obs_rgb_g /= x"0" or obs_rgb_b /= x"0" then
+                    rgb_r <= obs_rgb_r;
+                    rgb_g <= obs_rgb_g;
+                    rgb_b <= obs_rgb_b;
                 end if;
 
                 -- Handle collision
