@@ -2,9 +2,9 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 package black_car_graphic is
-    constant car_width : integer := 66;
-    constant car_height : integer := 88;
-    type black_car_array is array (0 to car_height-1, 0 to car_width-1) of std_logic_vector(11 downto 0);
+    constant black_car_width : integer := 66;
+    constant black_car_height : integer := 88;
+    type black_car_array is array (0 to black_car_height-1, 0 to black_car_width-1) of std_logic_vector(11 downto 0);
     constant BLACK_CAR_IMAGE : black_car_array := (
     (X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB"),
     (X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB", X"BBB"),
