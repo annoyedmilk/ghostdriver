@@ -5,8 +5,10 @@ use ieee.numeric_std.all;
 -- Import the car graphic data
 library work;
 use work.red_car_graphic.all;
-use work.street_image_graphic.all;
+use work.street_graphic.all;
 use work.blue_car_graphic.all;
+use work.black_car_graphic.all;
+use work.brown_car_graphic.all;
 
 entity racegame_top is
     generic (
@@ -90,6 +92,13 @@ architecture rtl of racegame_top is
     signal obs_rgb_g : std_logic_vector(3 downto 0);
     signal obs_rgb_b : std_logic_vector(3 downto 0);
 
+    signal scroll_offset : unsigned(9 downto 0) := (others => '0'); -- Vertical scroll offset
+    signal scroll_counter : unsigned(19 downto 0) := (others => '0'); -- Counter for slowing down scroll speed
+
+    constant SCROLL_SPEED : unsigned(19 downto 0) := to_unsigned(150000, 20); -- Adjust this for scroll speed
+
+    signal vpos_scroll : unsigned(9 downto 0); -- Signal for the wrapped vertical position
+
 begin
     PLL: if USE_PLL generate -- executed during Quartus compilation
         pll1: entity work.pll
@@ -162,6 +171,24 @@ begin
         end if;
     end process;
 
+    -- Update the scroll offset
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if scroll_counter = SCROLL_SPEED then
+                scroll_counter <= (others => '0');
+                if scroll_offset = to_unsigned(479, 10) then
+                    scroll_offset <= (others => '0');
+                else
+                    scroll_offset <= scroll_offset + 1;
+                end if;
+            else
+                scroll_counter <= scroll_counter + 1;
+            end if;
+        end if;
+    end process;
+
+    -- Rendering logic
     process(clk)
     begin
         if rising_edge(clk) then
@@ -171,21 +198,24 @@ begin
             rgb_b <= x"0";
 
             if display_on = '1' then
-                -- Render track
-                rgb_r <= STREET_IMAGE(to_integer(unsigned(vpos)), to_integer(unsigned(hpos)))(11 downto 8);
-                rgb_g <= STREET_IMAGE(to_integer(unsigned(vpos)), to_integer(unsigned(hpos)))(7 downto 4);
-                rgb_b <= STREET_IMAGE(to_integer(unsigned(vpos)), to_integer(unsigned(hpos)))(3 downto 0);
+                -- Calculate wrapped vertical position for scrolling
+                vpos_scroll <= (480 + unsigned(vpos) - scroll_offset) mod to_unsigned(480, 10);
 
-                -- Render car on top of the track
-                if unsigned(hpos) >= unsigned(car_pos_x) and unsigned(hpos) < unsigned(car_pos_x) + car_width and
-                   unsigned(vpos) >= 390 and unsigned(vpos) < 390 + car_height then
+                -- Render track
+                rgb_r <= STREET_IMAGE(to_integer(vpos_scroll), to_integer(unsigned(hpos)))(11 downto 8);
+                rgb_g <= STREET_IMAGE(to_integer(vpos_scroll), to_integer(unsigned(hpos)))(7 downto 4);
+                rgb_b <= STREET_IMAGE(to_integer(vpos_scroll), to_integer(unsigned(hpos)))(3 downto 0);
+								
+								-- Render car on top of the track
+                if unsigned(hpos) >= unsigned(car_pos_x) and unsigned(hpos) < unsigned(car_pos_x) + red_car_width and
+                   unsigned(vpos) >= 390 and unsigned(vpos) < 390 + red_car_height then
                     -- Draw car using the RED_CAR_IMAGE
                     rgb_r <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(11 downto 8);
                     rgb_g <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(7 downto 4);
                     rgb_b <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(3 downto 0);
                 end if;
 
-                -- Render obstacles on top of the car and track
+                -- Render obstacles on top of the track
                 if obs_rgb_r /= x"0" or obs_rgb_g /= x"0" or obs_rgb_b /= x"0" then
                     rgb_r <= obs_rgb_r;
                     rgb_g <= obs_rgb_g;

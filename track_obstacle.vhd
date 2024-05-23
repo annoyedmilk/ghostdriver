@@ -17,23 +17,31 @@ entity track_obstacle is
 end track_obstacle;
 
 architecture Behavioral of track_obstacle is
-    use work.blue_car_graphic.all;  -- Use the blue car graphic package
+    use work.blue_car_graphic.all;
+    use work.black_car_graphic.all;
+    use work.brown_car_graphic.all;
 
     constant OBSTACLE_WIDTH  : integer := blue_car_width;
     constant OBSTACLE_HEIGHT : integer := blue_car_height;
-    constant CAR_WIDTH       : integer := 50;  -- Increase hitbox width for the car
-    constant CAR_HEIGHT      : integer := 50;  -- Increase hitbox height for the car
-    constant CAR_Y_POSITION  : unsigned(9 downto 0) := to_unsigned(400, 10); -- Car's vertical position
-    constant SLOW_DOWN_FACTOR : integer := 200000; -- Reduce to make obstacles move faster
+    constant CAR_WIDTH       : integer := 50;
+    constant CAR_HEIGHT      : integer := 50;
+    constant CAR_Y_POSITION  : unsigned(9 downto 0) := to_unsigned(400, 10);
+    constant SLOW_DOWN_FACTOR : integer := 50000;
+
+    constant LANE_1 : unsigned(9 downto 0) := to_unsigned(134, 10);
+    constant LANE_2 : unsigned(9 downto 0) := to_unsigned(234, 10);
+    constant LANE_3 : unsigned(9 downto 0) := to_unsigned(334, 10);
+    constant LANE_4 : unsigned(9 downto 0) := to_unsigned(434, 10);
 
     type obstacle_array is array (0 to 3) of unsigned(9 downto 0);
-    signal obstacle_x : obstacle_array := (others => to_unsigned(200, 10));
+    type car_type_array is array (0 to 3) of integer;
+    signal obstacle_x : obstacle_array := (LANE_1, LANE_2, LANE_3, LANE_4);
     signal obstacle_y : obstacle_array := (others => to_unsigned(0, 10));
+    signal car_types : car_type_array := (others => 0);  -- 0: blue, 1: black, 2: brown
     signal slow_counter : integer := 0;
-    signal random_seed : unsigned(9 downto 0) := to_unsigned(12345, 10); -- Seed for LFSR
+    signal random_seed : unsigned(9 downto 0) := to_unsigned(12345, 10);
     signal collision_detected : std_logic := '0';
-    
-    -- Linear Feedback Shift Register (LFSR) for pseudo-random number generation
+
     function lfsr(seed: unsigned(9 downto 0)) return unsigned is
         variable lfsr_reg : unsigned(9 downto 0) := seed;
     begin
@@ -46,8 +54,15 @@ begin
         if reset = '0' then
             for i in 0 to 3 loop
                 random_seed <= lfsr(random_seed);
-                obstacle_x(i) <= random_seed mod 560 + 80; -- Random horizontal position within bounds
+                case to_integer(random_seed mod 4) is
+                    when 0 => obstacle_x(i) <= LANE_1;
+                    when 1 => obstacle_x(i) <= LANE_2;
+                    when 2 => obstacle_x(i) <= LANE_3;
+                    when 3 => obstacle_x(i) <= LANE_4;
+                    when others => obstacle_x(i) <= LANE_1;
+                end case;
                 obstacle_y(i) <= to_unsigned(0, 10);
+                car_types(i) <= to_integer(random_seed mod 3); -- Randomly assign car type
             end loop;
             slow_counter <= 0;
             collision_detected <= '0';
@@ -57,8 +72,15 @@ begin
                 for i in 0 to 3 loop
                     if obstacle_y(i) > to_unsigned(480, 10) then
                         random_seed <= lfsr(random_seed);
-                        obstacle_x(i) <= random_seed mod 560 + 80; -- Random horizontal position within bounds
+                        case to_integer(random_seed mod 4) is
+                            when 0 => obstacle_x(i) <= LANE_1;
+                            when 1 => obstacle_x(i) <= LANE_2;
+                            when 2 => obstacle_x(i) <= LANE_3;
+                            when 3 => obstacle_x(i) <= LANE_4;
+                            when others => obstacle_x(i) <= LANE_1;
+                        end case;
                         obstacle_y(i) <= to_unsigned(0, 10);
+                        car_types(i) <= to_integer(random_seed mod 3); -- Randomly assign car type
                     else
                         obstacle_y(i) <= obstacle_y(i) + 1;
                     end if;
@@ -67,7 +89,6 @@ begin
                 slow_counter <= slow_counter + 1;
             end if;
             
-            -- Collision detection
             collision_detected <= '0';
             for i in 0 to 3 loop
                 if unsigned(car_pos_x) + to_unsigned(CAR_WIDTH, 10) >= obstacle_x(i) and unsigned(car_pos_x) <= obstacle_x(i) + to_unsigned(OBSTACLE_WIDTH, 10) and
@@ -78,11 +99,9 @@ begin
         end if;
     end process;
 
-    -- Render obstacles (blue car) on top of the track
     process(clk)
     begin
         if rising_edge(clk) then
-            -- Default to black
             rgb_r <= x"0";               
             rgb_g <= x"0";
             rgb_b <= x"0";
@@ -90,10 +109,24 @@ begin
             for i in 0 to 3 loop
                 if unsigned(hpos) >= obstacle_x(i) and unsigned(hpos) < obstacle_x(i) + OBSTACLE_WIDTH and
                    unsigned(vpos) >= obstacle_y(i) and unsigned(vpos) < obstacle_y(i) + OBSTACLE_HEIGHT then
-                    -- Draw blue car obstacle
-                    rgb_r <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(11 downto 8);
-                    rgb_g <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(7 downto 4);
-                    rgb_b <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(3 downto 0);
+                    case car_types(i) is
+                        when 0 =>
+                            rgb_r <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(11 downto 8);
+                            rgb_g <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(7 downto 4);
+                            rgb_b <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(3 downto 0);
+                        when 1 =>
+                            rgb_r <= BLACK_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(11 downto 8);
+                            rgb_g <= BLACK_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(7 downto 4);
+                            rgb_b <= BLACK_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(3 downto 0);
+                        when 2 =>
+                            rgb_r <= BROWN_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(11 downto 8);
+                            rgb_g <= BROWN_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(7 downto 4);
+                            rgb_b <= BROWN_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(3 downto 0);
+                        when others =>
+                            rgb_r <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(11 downto 8);
+                            rgb_g <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(7 downto 4);
+                            rgb_b <= BLUE_CAR_IMAGE(to_integer(unsigned(vpos) - obstacle_y(i)), to_integer(unsigned(hpos) - obstacle_x(i)))(3 downto 0);
+                    end case;
                 end if;
             end loop;
         end if;
