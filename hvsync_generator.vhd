@@ -1,9 +1,9 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
-use ieee.std_logic_unsigned.all;
+library ieee; -- Import IEEE standard library
+use ieee.std_logic_1164.all; -- Import standard logic package for basic logic operations
+use ieee.numeric_std.all; -- Import numeric standard package for arithmetic operations
+use ieee.std_logic_unsigned.all; -- Import package for unsigned operations on std_logic_vector
 
--- Definition of the entity "hvsync_generator" with its ports
+-- Entity declaration for the horizontal and vertical sync generator
 entity hvsync_generator is
     port (
         clk         : in  std_logic;         -- Input for the clock
@@ -16,30 +16,30 @@ entity hvsync_generator is
     );
 end hvsync_generator;
 
--- Architecture definition of "hvsync_generator", uses behavioral modeling
+-- Architecture definition of "hvsync_generator" using behavioral modeling
 architecture Behavioral of hvsync_generator is
 
     -- Constants for the VGA sync parameters
-    constant H_DISPLAY : integer := 640; -- Width of the horizontal display
+    constant H_DISPLAY : integer := 640; -- Width of the horizontal display area
     constant H_BACK    : integer := 48;  -- Horizontal back porch
     constant H_FRONT   : integer := 16;  -- Horizontal front porch
     constant H_SYNC    : integer := 96;  -- Width of the horizontal sync pulse
-    constant V_DISPLAY : integer := 480; -- Height of the vertical display
-    constant V_TOP     : integer := 33;  -- Top border of the vertical display
-    constant V_BOTTOM  : integer := 10;  -- Bottom border of the vertical display
+    constant V_DISPLAY : integer := 480; -- Height of the vertical display area
+    constant V_TOP     : integer := 33;  -- Top border of the vertical display area
+    constant V_BOTTOM  : integer := 10;  -- Bottom border of the vertical display area
     constant V_SYNC    : integer := 2;   -- Width of the vertical sync pulse
 
     -- Derived constants for the sync timings
-    constant H_SYNC_START : integer := H_DISPLAY + H_FRONT; 
-    constant H_SYNC_END   : integer := H_DISPLAY + H_FRONT + H_SYNC - 1;
-    constant H_MAX        : integer := H_DISPLAY + H_BACK + H_FRONT + H_SYNC - 1;
-    constant V_SYNC_START : integer := V_DISPLAY + V_BOTTOM - 1;  
-    constant V_SYNC_END   : integer := V_DISPLAY + V_BOTTOM + V_SYNC - 1;
-    constant V_MAX        : integer := V_DISPLAY + V_TOP + V_BOTTOM + V_SYNC - 1;
+    constant H_SYNC_START : integer := H_DISPLAY + H_FRONT; -- Start of horizontal sync
+    constant H_SYNC_END   : integer := H_DISPLAY + H_FRONT + H_SYNC - 1; -- End of horizontal sync
+    constant H_MAX        : integer := H_DISPLAY + H_BACK + H_FRONT + H_SYNC - 1; -- Total horizontal cycle
+    constant V_SYNC_START : integer := V_DISPLAY + V_BOTTOM - 1; -- Start of vertical sync
+    constant V_SYNC_END   : integer := V_DISPLAY + V_BOTTOM + V_SYNC - 1; -- End of vertical sync
+    constant V_MAX        : integer := V_DISPLAY + V_TOP + V_BOTTOM + V_SYNC - 1; -- Total vertical cycle
 
-    -- Signals for positioning
-    signal local_hpos : unsigned(9 downto 0) := (others => '0');
-    signal local_vpos : unsigned(9 downto 0) := (others => '0');
+    -- Signals for horizontal and vertical positions
+    signal local_hpos : unsigned(9 downto 0) := (others => '0'); -- Horizontal position counter
+    signal local_vpos : unsigned(9 downto 0) := (others => '0'); -- Vertical position counter
 
 begin
 
@@ -47,47 +47,47 @@ begin
     process(clk, reset)
     begin
         if reset = '0' then
-            -- Resets all positions and sync signals when the reset signal is active
-            local_hpos <= (others => '0');
-            local_vpos <= (others => '0');
-            hsync      <= '0';
-            vsync      <= '0';
+            -- Reset all positions and sync signals when reset is active
+            local_hpos <= (others => '0'); -- Reset horizontal position
+            local_vpos <= (others => '0'); -- Reset vertical position
+            hsync      <= '0'; -- Reset horizontal sync signal
+            vsync      <= '0'; -- Reset vertical sync signal
         elsif rising_edge(clk) then
-            -- Logic for the horizontal sync signal
+            -- Horizontal sync signal generation
             if local_hpos >= H_SYNC_START and local_hpos <= H_SYNC_END then
-                hsync <= '0';
+                hsync <= '0'; -- Activate horizontal sync
             else
-                hsync <= '1';
+                hsync <= '1'; -- Deactivate horizontal sync
             end if;
 
-            -- Logic for position increment or reset
+            -- Horizontal position counter increment or reset
             if local_hpos = H_MAX then
-                local_hpos <= (others => '0');
+                local_hpos <= (others => '0'); -- Reset horizontal position at end of line
             else
-                local_hpos <= local_hpos + 1;
+                local_hpos <= local_hpos + 1; -- Increment horizontal position
             end if;
 
-            -- Logic for the vertical sync signal
+            -- Vertical sync signal generation
             if local_vpos >= V_SYNC_START and local_vpos <= V_SYNC_END then
-                vsync <= '0';
+                vsync <= '0'; -- Activate vertical sync
             else
-                vsync <= '1';
+                vsync <= '1'; -- Deactivate vertical sync
             end if;
 
-            -- Logic for vertical position increment or reset
+            -- Vertical position counter increment or reset
             if local_hpos = H_MAX then
                 if local_vpos = V_MAX then
-                    local_vpos <= (others => '0');
+                    local_vpos <= (others => '0'); -- Reset vertical position at end of frame
                 else
-                    local_vpos <= local_vpos + 1;
+                    local_vpos <= local_vpos + 1; -- Increment vertical position
                 end if;
             end if;
         end if;
     end process;
 
     -- Assignment of output signals
-    hpos <= std_logic_vector(local_hpos);
-    vpos <= std_logic_vector(local_vpos);
-    display_on <= '1' when (unsigned(hpos) < H_DISPLAY and unsigned(vpos) < V_DISPLAY) else '0';
+    hpos <= std_logic_vector(local_hpos); -- Assign horizontal position
+    vpos <= std_logic_vector(local_vpos); -- Assign vertical position
+    display_on <= '1' when (unsigned(hpos) < H_DISPLAY and unsigned(vpos) < V_DISPLAY) else '0'; -- Display active signal
 
 end Behavioral;
