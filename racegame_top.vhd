@@ -2,13 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
--- Import the car graphic data
-library work;
-use work.red_car_graphic.all;
-use work.street_graphic.all;
-use work.blue_car_graphic.all;
-use work.black_car_graphic.all;
-use work.brown_car_graphic.all;
+
 
 entity racegame_top is
     generic (
@@ -62,7 +56,7 @@ architecture rtl of racegame_top is
         );
     end component;
 
-    component track_obstacle is
+    component car_obstacle is
         port (
             clk              : in  std_logic;         -- Clock input
             reset            : in  std_logic;         -- Reset signal
@@ -74,6 +68,44 @@ architecture rtl of racegame_top is
             rgb_g            : out std_logic_vector(3 downto 0); -- 4-bit green output
             rgb_b            : out std_logic_vector(3 downto 0); -- 4-bit blue output
             obstacle_present : out std_logic          -- Signal indicating an obstacle is present
+        );
+    end component;
+
+    component rendering_logic is
+        port (
+            clk               : in  std_logic;
+            display_on        : in  std_logic;
+            hpos              : in  std_logic_vector(9 downto 0);
+            vpos              : in  std_logic_vector(9 downto 0);
+            car_pos_x         : in  std_logic_vector(9 downto 0);
+            obstacle_present  : in  std_logic;
+            obstacle_hit      : in  std_logic;
+            obs_rgb_r         : in  std_logic_vector(3 downto 0);
+            obs_rgb_g         : in  std_logic_vector(3 downto 0);
+            obs_rgb_b         : in  std_logic_vector(3 downto 0);
+            scroll_offset     : in  unsigned(9 downto 0);
+            rgb_r             : out std_logic_vector(3 downto 0);
+            rgb_g             : out std_logic_vector(3 downto 0);
+            rgb_b             : out std_logic_vector(3 downto 0)
+        );
+    end component;
+
+    component scrolling_logic is
+        port (
+            clk          : in  std_logic;
+            reset        : in  std_logic;
+            scroll_speed : in  unsigned(19 downto 0);
+            scroll_offset : out unsigned(9 downto 0)
+        );
+    end component;
+
+    component led_control is
+        port (
+            clk       : in  std_logic;
+            btn_left  : in  std_logic;
+            btn_right : in  std_logic;
+            led_left  : out std_logic;
+            led_right : out std_logic
         );
     end component;
 
@@ -94,12 +126,8 @@ architecture rtl of racegame_top is
     signal obs_rgb_b : std_logic_vector(3 downto 0);
     signal obstacle_present : std_logic;
 
-    signal scroll_offset : unsigned(9 downto 0) := (others => '0'); -- Vertical scroll offset
-    signal scroll_counter : unsigned(19 downto 0) := (others => '0'); -- Counter for slowing down scroll speed
-
+    signal scroll_offset : unsigned(9 downto 0); -- Vertical scroll offset
     constant SCROLL_SPEED : unsigned(19 downto 0) := to_unsigned(150000, 20); -- Adjust this for scroll speed
-
-    signal vpos_scroll : unsigned(9 downto 0); -- Signal for the wrapped vertical position
 
 begin
     PLL: if USE_PLL generate -- executed during Quartus compilation
@@ -151,7 +179,7 @@ begin
             car_pos_x  => car_pos_x
         );
 
-    track_obstacle_inst : track_obstacle
+    car_obstacle_inst : car_obstacle
         port map (
             clk              => clk,
             reset            => reset,
@@ -165,75 +193,39 @@ begin
             obstacle_present => obstacle_present
         );
 
-    -- Synchronize button inputs to the clock
-    process(clk)
-    begin
-        if rising_edge(clk) then
-            led_left <= btn_left_clean;
-            led_right <= btn_right_clean;
-        end if;
-    end process;
+    led_ctrl : led_control
+        port map (
+            clk       => clk,
+            btn_left  => btn_left_clean,
+            btn_right => btn_right_clean,
+            led_left  => led_left,
+            led_right => led_right
+        );
 
-    -- Update the scroll offset
-    process(clk)
-    begin
-        if rising_edge(clk) then
-            if scroll_counter = SCROLL_SPEED then
-                scroll_counter <= (others => '0');
-                if scroll_offset = to_unsigned(479, 10) then
-                    scroll_offset <= (others => '0');
-                else
-                    scroll_offset <= scroll_offset + 1;
-                end if;
-            else
-                scroll_counter <= scroll_counter + 1;
-            end if;
-        end if;
-    end process;
+    scrolling_ctrl : scrolling_logic
+        port map (
+            clk          => clk,
+            reset        => reset,
+            scroll_speed => SCROLL_SPEED,
+            scroll_offset => scroll_offset
+        );
 
-    -- Rendering logic
-    process(clk)
-    begin
-        if rising_edge(clk) then
-            -- Default to black
-            rgb_r <= x"0";               
-            rgb_g <= x"0";
-            rgb_b <= x"0";
-
-            if display_on = '1' then
-                -- Calculate wrapped vertical position for scrolling
-                vpos_scroll <= (480 + unsigned(vpos) - scroll_offset) mod to_unsigned(480, 10);
-
-                -- Render track
-                rgb_r <= STREET_IMAGE(to_integer(vpos_scroll), to_integer(unsigned(hpos)))(11 downto 8);
-                rgb_g <= STREET_IMAGE(to_integer(vpos_scroll), to_integer(unsigned(hpos)))(7 downto 4);
-                rgb_b <= STREET_IMAGE(to_integer(vpos_scroll), to_integer(unsigned(hpos)))(3 downto 0);
-								
-                -- Render car on top of the track
-                if unsigned(hpos) >= unsigned(car_pos_x) and unsigned(hpos) < unsigned(car_pos_x) + red_car_width and
-                   unsigned(vpos) >= 390 and unsigned(vpos) < 390 + red_car_height then
-                    -- Draw car using the RED_CAR_IMAGE
-                    rgb_r <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(11 downto 8);
-                    rgb_g <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(7 downto 4);
-                    rgb_b <= RED_CAR_IMAGE(to_integer(unsigned(vpos) - 390), to_integer(unsigned(hpos) - unsigned(car_pos_x)))(3 downto 0);
-                end if;
-
-                -- Render obstacles on top of the track
-                if obstacle_present = '1' then
-                    rgb_r <= obs_rgb_r;
-                    rgb_g <= obs_rgb_g;
-                    rgb_b <= obs_rgb_b;
-                end if;
-
-                -- Handle collision
-                if obstacle_hit = '1' then
-                    -- If a collision occurs, set the screen to red
-                    rgb_r <= x"F";
-                    rgb_g <= x"0";
-                    rgb_b <= x"0";
-                end if;
-            end if;
-        end if;
-    end process;
+    render_ctrl : rendering_logic
+        port map (
+            clk               => clk,
+            display_on        => display_on,
+            hpos              => hpos,
+            vpos              => vpos,
+            car_pos_x         => car_pos_x,
+            obstacle_present  => obstacle_present,
+            obstacle_hit      => obstacle_hit,
+            obs_rgb_r         => obs_rgb_r,
+            obs_rgb_g         => obs_rgb_g,
+            obs_rgb_b         => obs_rgb_b,
+            scroll_offset     => scroll_offset,
+            rgb_r             => rgb_r,
+            rgb_g             => rgb_g,
+            rgb_b             => rgb_b
+        );
 
 end architecture;

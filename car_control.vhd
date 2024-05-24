@@ -23,7 +23,7 @@ architecture Behavioral of car_control is
     signal left_prev : std_logic := '0';
     signal right_prev : std_logic := '0';
 
-    signal lane_index : integer := 3; -- Start at lane 3
+    signal lane_index : integer range 1 to 4 := 3; -- Start at lane 3
 begin
     process(clk, reset)
     begin

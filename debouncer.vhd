@@ -15,28 +15,20 @@ architecture rtl of debouncer is
     constant C_DEBOUNCE_TIME : integer := 500000; -- 50MHz clock, 500000 cycles = 10ms
     signal counter : integer := 0;
     signal debounced_signal : std_logic := '0';
-    signal debouncing : boolean := false;
 begin
     process(clk, reset)
     begin
         if reset = '0' then
             counter <= 0;
             debounced_signal <= '0';
-            debouncing <= false;
         elsif rising_edge(clk) then
-            if not (noisy /= debounced_signal) then
-                if not debouncing then
-                    debouncing <= true;
-                    counter <= 0;
-                elsif counter < C_DEBOUNCE_TIME then
-                    counter <= counter + 1;
-                else
-                    debouncing <= false;
-                    debounced_signal <= not noisy;
-                end if;
-            else
-                debouncing <= false;
+            if noisy = debounced_signal then
                 counter <= 0;
+            elsif counter < C_DEBOUNCE_TIME then
+                counter <= counter + 1;
+            else
+                counter <= 0;
+                debounced_signal <= noisy;
             end if;
         end if;
     end process;
