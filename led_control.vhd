@@ -16,8 +16,8 @@ begin
     process(clk)
     begin
         if rising_edge(clk) then
-            led_left <= btn_left;
-            led_right <= btn_right;
+            led_left <= not btn_left;
+            led_right <= not btn_right;
         end if;
     end process;
 end Behavioral;

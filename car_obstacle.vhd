@@ -13,7 +13,8 @@ entity car_obstacle is
         rgb_r            : out std_logic_vector(3 downto 0); -- 4-bit red output
         rgb_g            : out std_logic_vector(3 downto 0); -- 4-bit green output
         rgb_b            : out std_logic_vector(3 downto 0); -- 4-bit blue output
-        obstacle_present : out std_logic  -- Obstacle present signal
+        obstacle_present : out std_logic;  -- Obstacle present signal
+        score            : out unsigned(15 downto 0) -- 16-bit score output
     );
 end car_obstacle;
 
@@ -43,6 +44,7 @@ architecture Behavioral of car_obstacle is
     signal random_seed : unsigned(9 downto 0) := to_unsigned(12345, 10);
     signal collision_detected : std_logic := '0';
     signal obstacle_present_internal : std_logic := '0';
+    signal current_score : unsigned(15 downto 0) := (others => '0');
 
     function lfsr(seed: unsigned(9 downto 0)) return unsigned is
         variable lfsr_reg : unsigned(9 downto 0) := seed;
@@ -50,8 +52,9 @@ architecture Behavioral of car_obstacle is
         lfsr_reg := lfsr_reg(8 downto 0) & (lfsr_reg(9) xor lfsr_reg(5) xor lfsr_reg(4) xor lfsr_reg(3));
         return lfsr_reg;
     end function;
+
 begin
-    process(clk, reset)
+    process(clk, reset, random_seed)
     begin
         if reset = '0' then
             for i in 0 to 3 loop
@@ -69,6 +72,7 @@ begin
             slow_counter <= 0;
             collision_detected <= '0';
             obstacle_present_internal <= '0';
+            current_score <= (others => '0');
         elsif rising_edge(clk) then
             if slow_counter = SLOW_DOWN_FACTOR then
                 slow_counter <= 0;
@@ -84,6 +88,9 @@ begin
                         end case;
                         obstacle_y(i) <= to_unsigned(0, 10);
                         car_types(i) <= to_integer(random_seed mod 3); -- Randomly assign car type
+                        if collision_detected = '0' then
+                            current_score <= current_score + 1; -- Increment score on new car spawn if no collision
+                        end if;
                     else
                         obstacle_y(i) <= obstacle_y(i) + 1;
                     end if;
@@ -91,13 +98,14 @@ begin
             else
                 slow_counter <= slow_counter + 1;
             end if;
-            
+
             collision_detected <= '0';
             obstacle_present_internal <= '0';
             for i in 0 to 3 loop
                 if unsigned(car_pos_x) + to_unsigned(CAR_WIDTH, 10) >= obstacle_x(i) and unsigned(car_pos_x) <= obstacle_x(i) + to_unsigned(OBSTACLE_WIDTH, 10) and
                    CAR_Y_POSITION + to_unsigned(CAR_HEIGHT, 10) >= obstacle_y(i) and CAR_Y_POSITION <= obstacle_y(i) + to_unsigned(OBSTACLE_HEIGHT, 10) then
                     collision_detected <= '1';
+                    current_score <= (others => '0'); -- Reset score on collision
                 end if;
 
                 if unsigned(hpos) >= obstacle_x(i) and unsigned(hpos) < obstacle_x(i) + OBSTACLE_WIDTH and
@@ -143,5 +151,6 @@ begin
 
     obstacle_hit <= collision_detected;
     obstacle_present <= obstacle_present_internal;
+    score <= current_score;
 
 end Behavioral;

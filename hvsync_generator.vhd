@@ -1,4 +1,3 @@
--- Import libraries and packages for using standardized logic and numeric functions
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -12,9 +11,6 @@ entity hvsync_generator is
         hsync       : out std_logic;         -- Output for the horizontal sync signal
         vsync       : out std_logic;         -- Output for the vertical sync signal
         display_on  : out std_logic;         -- Output signal indicating if the display is active
-        rgb_r       : out std_logic_vector(3 downto 0); -- 4-bit red output
-        rgb_g       : out std_logic_vector(3 downto 0); -- 4-bit green output
-        rgb_b       : out std_logic_vector(3 downto 0); -- 4-bit blue output
         hpos        : buffer std_logic_vector(9 downto 0); -- Buffer for the horizontal position
         vpos        : buffer std_logic_vector(9 downto 0)  -- Buffer for the vertical position
     );
@@ -56,9 +52,6 @@ begin
             local_vpos <= (others => '0');
             hsync      <= '0';
             vsync      <= '0';
-            rgb_r      <= (others => '0');
-            rgb_g      <= (others => '0');
-            rgb_b      <= (others => '0');
         elsif rising_edge(clk) then
             -- Logic for the horizontal sync signal
             if local_hpos >= H_SYNC_START and local_hpos <= H_SYNC_END then

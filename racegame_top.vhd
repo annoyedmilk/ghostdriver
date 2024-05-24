@@ -2,24 +2,27 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-
-
 entity racegame_top is
     generic (
         USE_PLL : boolean := true
     );  
     port (
-        clk_50    : in std_logic; -- 50 MHz input clock
-        reset     : in std_logic; -- input signal for reset
-        btn_left  : in std_logic; -- button for moving left
-        btn_right : in std_logic; -- button for moving right
-        hsync     : out std_logic; -- output signal for horizontal sync
-        vsync     : out std_logic; -- output signal for vertical sync
-        rgb_r     : out std_logic_vector(3 downto 0); -- 4-bit red output
-        rgb_g     : out std_logic_vector(3 downto 0); -- 4-bit green output
-        rgb_b     : out std_logic_vector(3 downto 0); -- 4-bit blue output
-        led_left  : out std_logic; -- LED for left button
-        led_right : out std_logic  -- LED for right button
+        clk_50       : in std_logic; -- 50 MHz input clock
+        reset        : in std_logic; -- input signal for reset
+        btn_left     : in std_logic; -- button for moving left
+        btn_right    : in std_logic; -- button for moving right
+        hsync        : out std_logic; -- output signal for horizontal sync
+        vsync        : out std_logic; -- output signal for vertical sync
+        rgb_r        : out std_logic_vector(3 downto 0); -- 4-bit red output
+        rgb_g        : out std_logic_vector(3 downto 0); -- 4-bit green output
+        rgb_b        : out std_logic_vector(3 downto 0); -- 4-bit blue output
+        led_left     : out std_logic; -- LED for left button
+        led_right    : out std_logic; -- LED for right button
+        Segment0     : out std_logic_vector(6 downto 0); -- Seven-segment display segments for digit 0
+        Segment1     : out std_logic_vector(6 downto 0); -- Seven-segment display segments for digit 1
+        Segment2     : out std_logic_vector(6 downto 0); -- Seven-segment display segments for digit 2
+        Segment3     : out std_logic_vector(6 downto 0); -- Seven-segment display segments for digit 3
+        leds         : out std_logic_vector(7 downto 0)  -- Additional 8 LEDs
     );
 end entity;
 
@@ -32,8 +35,8 @@ architecture rtl of racegame_top is
             hsync      : out std_logic; -- horizontal sync signal
             vsync      : out std_logic; -- vertical sync signal
             display_on : out std_logic; -- display control signal
-            hpos       : out std_logic_vector(9 downto 0); -- horizontal position
-            vpos       : out std_logic_vector(9 downto 0)  -- vertical position
+            hpos       : buffer std_logic_vector(9 downto 0); -- horizontal position
+            vpos       : buffer std_logic_vector(9 downto 0)  -- vertical position
         );
     end component;
 
@@ -67,7 +70,8 @@ architecture rtl of racegame_top is
             rgb_r            : out std_logic_vector(3 downto 0); -- 4-bit red output
             rgb_g            : out std_logic_vector(3 downto 0); -- 4-bit green output
             rgb_b            : out std_logic_vector(3 downto 0); -- 4-bit blue output
-            obstacle_present : out std_logic          -- Signal indicating an obstacle is present
+            obstacle_present : out std_logic;          -- Signal indicating an obstacle is present
+            score            : out unsigned(15 downto 0) -- 16-bit score output
         );
     end component;
 
@@ -109,6 +113,19 @@ architecture rtl of racegame_top is
         );
     end component;
 
+    component seven_segment_display is
+        port (
+            clk          : in  std_logic; -- Clock input
+            reset        : in  std_logic; -- Reset input
+            score        : in  unsigned(15 downto 0); -- 16-bit score input
+            Segment0     : out std_logic_vector(6 downto 0); -- Seven-segment display segments for digit 0
+            Segment1     : out std_logic_vector(6 downto 0); -- Seven-segment display segments for digit 1
+            Segment2     : out std_logic_vector(6 downto 0); -- Seven-segment display segments for digit 2
+            Segment3     : out std_logic_vector(6 downto 0);  -- Seven-segment display segments for digit 3
+						leds     : out std_logic_vector(7 downto 0)
+        );
+    end component;
+
     signal clk        : std_logic; -- internal clock
     signal locked     : std_logic; -- PLL lock signal
     
@@ -125,11 +142,13 @@ architecture rtl of racegame_top is
     signal obs_rgb_g : std_logic_vector(3 downto 0);
     signal obs_rgb_b : std_logic_vector(3 downto 0);
     signal obstacle_present : std_logic;
+    signal score : unsigned(15 downto 0);
 
     signal scroll_offset : unsigned(9 downto 0); -- Vertical scroll offset
     constant SCROLL_SPEED : unsigned(19 downto 0) := to_unsigned(150000, 20); -- Adjust this for scroll speed
 
 begin
+
     PLL: if USE_PLL generate -- executed during Quartus compilation
         pll1: entity work.pll
         port map (
@@ -190,7 +209,8 @@ begin
             rgb_r            => obs_rgb_r,
             rgb_g            => obs_rgb_g,
             rgb_b            => obs_rgb_b,
-            obstacle_present => obstacle_present
+            obstacle_present => obstacle_present,
+            score            => score
         );
 
     led_ctrl : led_control
@@ -226,6 +246,18 @@ begin
             rgb_r             => rgb_r,
             rgb_g             => rgb_g,
             rgb_b             => rgb_b
+        );
+
+    seven_segment_ctrl : seven_segment_display
+        port map (
+            clk          => clk,
+            reset        => reset,
+            score        => score,
+            Segment0     => Segment0,
+            Segment1     => Segment1,
+            Segment2     => Segment2,
+            Segment3     => Segment3,
+						leds				 => leds
         );
 
 end architecture;
