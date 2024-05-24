@@ -4,15 +4,16 @@ use ieee.numeric_std.all;
 
 entity track_obstacle is
     port (
-        clk          : in  std_logic;  -- Clock input
-        reset        : in  std_logic;  -- Reset signal
-        car_pos_x    : in  std_logic_vector(9 downto 0); -- Car's horizontal position
-        hpos         : in  unsigned(9 downto 0); -- Horizontal position
-        vpos         : in  unsigned(9 downto 0); -- Vertical position
-        obstacle_hit : out std_logic;  -- Obstacle hit signal
-        rgb_r        : out std_logic_vector(3 downto 0); -- 4-bit red output
-        rgb_g        : out std_logic_vector(3 downto 0); -- 4-bit green output
-        rgb_b        : out std_logic_vector(3 downto 0)  -- 4-bit blue output
+        clk              : in  std_logic;  -- Clock input
+        reset            : in  std_logic;  -- Reset signal
+        car_pos_x        : in  std_logic_vector(9 downto 0); -- Car's horizontal position
+        hpos             : in  unsigned(9 downto 0); -- Horizontal position
+        vpos             : in  unsigned(9 downto 0); -- Vertical position
+        obstacle_hit     : out std_logic;  -- Obstacle hit signal
+        rgb_r            : out std_logic_vector(3 downto 0); -- 4-bit red output
+        rgb_g            : out std_logic_vector(3 downto 0); -- 4-bit green output
+        rgb_b            : out std_logic_vector(3 downto 0); -- 4-bit blue output
+        obstacle_present : out std_logic  -- Obstacle present signal
     );
 end track_obstacle;
 
@@ -41,6 +42,7 @@ architecture Behavioral of track_obstacle is
     signal slow_counter : integer := 0;
     signal random_seed : unsigned(9 downto 0) := to_unsigned(12345, 10);
     signal collision_detected : std_logic := '0';
+    signal obstacle_present_internal : std_logic := '0';
 
     function lfsr(seed: unsigned(9 downto 0)) return unsigned is
         variable lfsr_reg : unsigned(9 downto 0) := seed;
@@ -66,6 +68,7 @@ begin
             end loop;
             slow_counter <= 0;
             collision_detected <= '0';
+            obstacle_present_internal <= '0';
         elsif rising_edge(clk) then
             if slow_counter = SLOW_DOWN_FACTOR then
                 slow_counter <= 0;
@@ -90,10 +93,16 @@ begin
             end if;
             
             collision_detected <= '0';
+            obstacle_present_internal <= '0';
             for i in 0 to 3 loop
                 if unsigned(car_pos_x) + to_unsigned(CAR_WIDTH, 10) >= obstacle_x(i) and unsigned(car_pos_x) <= obstacle_x(i) + to_unsigned(OBSTACLE_WIDTH, 10) and
                    CAR_Y_POSITION + to_unsigned(CAR_HEIGHT, 10) >= obstacle_y(i) and CAR_Y_POSITION <= obstacle_y(i) + to_unsigned(OBSTACLE_HEIGHT, 10) then
                     collision_detected <= '1';
+                end if;
+
+                if unsigned(hpos) >= obstacle_x(i) and unsigned(hpos) < obstacle_x(i) + OBSTACLE_WIDTH and
+                   unsigned(vpos) >= obstacle_y(i) and unsigned(vpos) < obstacle_y(i) + OBSTACLE_HEIGHT then
+                    obstacle_present_internal <= '1';
                 end if;
             end loop;
         end if;
@@ -133,5 +142,6 @@ begin
     end process;
 
     obstacle_hit <= collision_detected;
+    obstacle_present <= obstacle_present_internal;
 
 end Behavioral;

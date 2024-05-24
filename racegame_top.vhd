@@ -64,15 +64,16 @@ architecture rtl of racegame_top is
 
     component track_obstacle is
         port (
-            clk          : in  std_logic;         -- Clock input
-            reset        : in  std_logic;         -- Reset signal
-            car_pos_x    : in  std_logic_vector(9 downto 0); -- Car's horizontal position
-            hpos         : in  unsigned(9 downto 0); -- Horizontal position
-            vpos         : in  unsigned(9 downto 0); -- Vertical position
-            obstacle_hit : out std_logic;         -- Signal indicating a collision
-            rgb_r        : out std_logic_vector(3 downto 0); -- 4-bit red output
-            rgb_g        : out std_logic_vector(3 downto 0); -- 4-bit green output
-            rgb_b        : out std_logic_vector(3 downto 0)  -- 4-bit blue output
+            clk              : in  std_logic;         -- Clock input
+            reset            : in  std_logic;         -- Reset signal
+            car_pos_x        : in  std_logic_vector(9 downto 0); -- Car's horizontal position
+            hpos             : in  unsigned(9 downto 0); -- Horizontal position
+            vpos             : in  unsigned(9 downto 0); -- Vertical position
+            obstacle_hit     : out std_logic;         -- Signal indicating a collision
+            rgb_r            : out std_logic_vector(3 downto 0); -- 4-bit red output
+            rgb_g            : out std_logic_vector(3 downto 0); -- 4-bit green output
+            rgb_b            : out std_logic_vector(3 downto 0); -- 4-bit blue output
+            obstacle_present : out std_logic          -- Signal indicating an obstacle is present
         );
     end component;
 
@@ -91,6 +92,7 @@ architecture rtl of racegame_top is
     signal obs_rgb_r : std_logic_vector(3 downto 0);
     signal obs_rgb_g : std_logic_vector(3 downto 0);
     signal obs_rgb_b : std_logic_vector(3 downto 0);
+    signal obstacle_present : std_logic;
 
     signal scroll_offset : unsigned(9 downto 0) := (others => '0'); -- Vertical scroll offset
     signal scroll_counter : unsigned(19 downto 0) := (others => '0'); -- Counter for slowing down scroll speed
@@ -151,15 +153,16 @@ begin
 
     track_obstacle_inst : track_obstacle
         port map (
-            clk          => clk,
-            reset        => reset,
-            car_pos_x    => car_pos_x,
-            hpos         => unsigned(hpos),
-            vpos         => unsigned(vpos),
-            obstacle_hit => obstacle_hit,
-            rgb_r        => obs_rgb_r,
-            rgb_g        => obs_rgb_g,
-            rgb_b        => obs_rgb_b
+            clk              => clk,
+            reset            => reset,
+            car_pos_x        => car_pos_x,
+            hpos             => unsigned(hpos),
+            vpos             => unsigned(vpos),
+            obstacle_hit     => obstacle_hit,
+            rgb_r            => obs_rgb_r,
+            rgb_g            => obs_rgb_g,
+            rgb_b            => obs_rgb_b,
+            obstacle_present => obstacle_present
         );
 
     -- Synchronize button inputs to the clock
@@ -206,7 +209,7 @@ begin
                 rgb_g <= STREET_IMAGE(to_integer(vpos_scroll), to_integer(unsigned(hpos)))(7 downto 4);
                 rgb_b <= STREET_IMAGE(to_integer(vpos_scroll), to_integer(unsigned(hpos)))(3 downto 0);
 								
-								-- Render car on top of the track
+                -- Render car on top of the track
                 if unsigned(hpos) >= unsigned(car_pos_x) and unsigned(hpos) < unsigned(car_pos_x) + red_car_width and
                    unsigned(vpos) >= 390 and unsigned(vpos) < 390 + red_car_height then
                     -- Draw car using the RED_CAR_IMAGE
@@ -216,7 +219,7 @@ begin
                 end if;
 
                 -- Render obstacles on top of the track
-                if obs_rgb_r /= x"0" or obs_rgb_g /= x"0" or obs_rgb_b /= x"0" then
+                if obstacle_present = '1' then
                     rgb_r <= obs_rgb_r;
                     rgb_g <= obs_rgb_g;
                     rgb_b <= obs_rgb_b;
