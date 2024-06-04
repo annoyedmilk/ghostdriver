@@ -137,7 +137,6 @@ architecture rtl of racegame_top is
 
     -- Signal declarations
     signal clk                : std_logic; -- Internal clock
-    signal locked             : std_logic; -- PLL lock signal
     signal display_on         : std_logic; -- Display control signal
     signal hpos               : std_logic_vector(9 downto 0); -- Horizontal position
     signal vpos               : std_logic_vector(9 downto 0); -- Vertical position
@@ -162,8 +161,7 @@ begin
         pll1: entity work.pll
         port map (
             inclk0 => clk_50, -- Input clock
-            c0     => clk, -- Generated clock
-            locked => locked -- PLL lock signal
+            c0     => clk -- Generated clock
         );
     end generate PLL;
 

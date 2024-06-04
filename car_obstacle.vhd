@@ -66,25 +66,8 @@ begin
     -- Main process for obstacle generation and movement
     process(clk, reset, random_seed)
     begin
-        if reset = '0' then
-            -- Initialize obstacles and random seed on reset
-            for i in 0 to 3 loop
-                random_seed <= lfsr(random_seed);
-                case to_integer(random_seed mod 4) is
-                    when 0 => obstacle_x(i) <= LANE_1;
-                    when 1 => obstacle_x(i) <= LANE_2;
-                    when 2 => obstacle_x(i) <= LANE_3;
-                    when 3 => obstacle_x(i) <= LANE_4;
-                    when others => obstacle_x(i) <= LANE_1;
-                end case;
-                obstacle_y(i) <= to_unsigned(0, 10);
-                car_types(i) <= to_integer(random_seed mod 3); -- Randomly assign car type
-            end loop;
-            slow_counter <= 0;
-            collision_detected <= '0';
-            obstacle_present_internal <= '0';
-            current_score <= (others => '0');
-        elsif rising_edge(clk) then
+
+        if rising_edge(clk) then
             if slow_counter = SLOW_DOWN_FACTOR then
                 -- Move obstacles downwards
                 slow_counter <= 0;
@@ -127,6 +110,25 @@ begin
                     obstacle_present_internal <= '1';
                 end if;
             end loop;
+					        if reset = '0' then
+            -- Initialize obstacles and random seed on reset
+            for i in 0 to 3 loop
+                random_seed <= lfsr(random_seed);
+                case to_integer(random_seed mod 4) is
+                    when 0 => obstacle_x(i) <= LANE_1;
+                    when 1 => obstacle_x(i) <= LANE_2;
+                    when 2 => obstacle_x(i) <= LANE_3;
+                    when 3 => obstacle_x(i) <= LANE_4;
+                    when others => obstacle_x(i) <= LANE_1;
+                end case;
+                obstacle_y(i) <= to_unsigned(0, 10);
+                car_types(i) <= to_integer(random_seed mod 3); -- Randomly assign car type
+            end loop;
+            slow_counter <= 0;
+            collision_detected <= '0';
+            obstacle_present_internal <= '0';
+            current_score <= (others => '0');
+				end if;
         end if;
     end process;
 

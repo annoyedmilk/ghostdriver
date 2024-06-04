@@ -30,13 +30,8 @@ begin
     -- Process for handling car movement
     process(clk, reset)
     begin
-        if reset = '0' then
-            -- Reset all signals to default values
-            x_pos <= LANE_3; -- Reset position to lane 3
-            lane_index <= 3; -- Reset lane index to 3
-            left_prev <= '0'; -- Reset previous left signal
-            right_prev <= '0'; -- Reset previous right signal
-        elsif rising_edge(clk) then
+
+        if rising_edge(clk) then
             -- Detect rising edge for move_left signal
             if (move_left = '1' and left_prev = '0') then
                 if lane_index > 1 then
@@ -61,7 +56,14 @@ begin
                 when 4 => x_pos <= LANE_4; -- Move to lane 4
                 when others => x_pos <= LANE_3; -- Default to lane 3 for safety
             end case;
-        end if;
+				    if reset = '0' then
+            -- Reset all signals to default values
+            x_pos <= LANE_3; -- Reset position to lane 3
+            lane_index <= 3; -- Reset lane index to 3
+            left_prev <= '0'; -- Reset previous left signal
+            right_prev <= '0'; -- Reset previous right signal
+						end if;
+					end if;
     end process;
 
     -- Assign the car's horizontal position to the output port

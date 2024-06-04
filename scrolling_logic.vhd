@@ -19,11 +19,8 @@ begin
     -- Process for managing scrolling logic
     process(clk, reset)
     begin
-        if reset = '0' then
-            -- Reset the scroll counter and scroll offset to zero
-            scroll_counter <= (others => '0'); -- Reset scroll counter
-            scroll_offset <= (others => '0'); -- Reset scroll offset
-        elsif rising_edge(clk) then
+
+        if rising_edge(clk) then
             if scroll_counter = scroll_speed then
                 -- If scroll counter matches the scroll speed
                 scroll_counter <= (others => '0'); -- Reset scroll counter
@@ -38,6 +35,11 @@ begin
                 -- Increment the scroll counter
                 scroll_counter <= scroll_counter + 1;
             end if;
-        end if;
+				    if reset = '0' then
+            -- Reset the scroll counter and scroll offset to zero
+            scroll_counter <= (others => '0'); -- Reset scroll counter
+            scroll_offset <= (others => '0'); -- Reset scroll offset
+						end if;
+			end if;
     end process;
 end Behavioral;

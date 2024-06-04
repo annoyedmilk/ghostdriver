@@ -24,11 +24,8 @@ begin
     -- Process for debounce logic
     process(clk, reset)
     begin
-        if reset = '0' then
-            -- Asynchronous reset
-            counter <= 0; -- Reset counter
-            debounced_signal <= '0'; -- Reset debounced signal
-        elsif rising_edge(clk) then
+
+        if rising_edge(clk) then
             -- On clock rising edge
             if noisy = debounced_signal then
                 -- If noisy input matches the debounced signal
@@ -41,6 +38,11 @@ begin
                 counter <= 0; -- Reset counter
                 debounced_signal <= noisy; -- Update debounced signal
             end if;
+					  if reset = '0' then
+								-- Synchronous reset
+              counter <= 0; -- Reset counter
+              debounced_signal <= '0'; -- Reset debounced signal
+				   end if;		
         end if;
     end process;
 

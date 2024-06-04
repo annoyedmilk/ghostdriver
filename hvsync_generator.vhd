@@ -46,13 +46,8 @@ begin
     -- Process for synchronization and reset logic
     process(clk, reset)
     begin
-        if reset = '0' then
-            -- Reset all positions and sync signals when reset is active
-            local_hpos <= (others => '0'); -- Reset horizontal position
-            local_vpos <= (others => '0'); -- Reset vertical position
-            hsync      <= '0'; -- Reset horizontal sync signal
-            vsync      <= '0'; -- Reset vertical sync signal
-        elsif rising_edge(clk) then
+
+        if rising_edge(clk) then
             -- Horizontal sync signal generation
             if local_hpos >= H_SYNC_START and local_hpos <= H_SYNC_END then
                 hsync <= '0'; -- Activate horizontal sync
@@ -82,6 +77,13 @@ begin
                     local_vpos <= local_vpos + 1; -- Increment vertical position
                 end if;
             end if;
+				    if reset = '0' then
+            -- Reset all positions and sync signals when reset is active
+            local_hpos <= (others => '0'); -- Reset horizontal position
+            local_vpos <= (others => '0'); -- Reset vertical position
+            hsync      <= '0'; -- Reset horizontal sync signal
+            vsync      <= '0'; -- Reset vertical sync signal
+						end if;
         end if;
     end process;
 

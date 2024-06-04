@@ -6,9 +6,6 @@ use ieee.numeric_std.all; -- Import numeric standard package for arithmetic oper
 library work;
 use work.red_car_graphic.all;
 use work.street_graphic.all;
-use work.blue_car_graphic.all;
-use work.black_car_graphic.all;
-use work.brown_car_graphic.all;
 
 -- Entity declaration for rendering logic
 entity rendering_logic is

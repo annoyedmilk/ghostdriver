@@ -44,14 +44,8 @@ begin
     -- Process for updating the seven-segment displays and LEDs
     process(clk, reset)
     begin
-        if reset = '0' then
-            -- Reset all digits and LEDs
-            digit0 <= "0000"; -- Reset units digit
-            digit1 <= "0000"; -- Reset tens digit
-            digit2 <= "0000"; -- Reset hundreds digit
-            digit3 <= "0000"; -- Reset thousands digit
-            leds <= "00000000"; -- Reset LEDs
-        elsif rising_edge(clk) then
+
+        if rising_edge(clk) then
             -- Convert score to BCD format
             bcd <= std_logic_vector(to_unsigned(to_integer(score mod 10), 4)) &
                    std_logic_vector(to_unsigned(to_integer((score / 10) mod 10), 4)) &
@@ -72,7 +66,15 @@ begin
 
             -- Set LEDs to 1 to ensure they are off by default
             leds <= "00000000"; -- Turn off LEDs
-        end if;
+				    if reset = '0' then
+            -- Reset all digits and LEDs
+            digit0 <= "0000"; -- Reset units digit
+            digit1 <= "0000"; -- Reset tens digit
+            digit2 <= "0000"; -- Reset hundreds digit
+            digit3 <= "0000"; -- Reset thousands digit
+            leds <= "00000000"; -- Reset LEDs
+						end if;
+			end if;
     end process;
 
 end Behavioral;
