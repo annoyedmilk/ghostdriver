@@ -38,11 +38,12 @@ begin
                 counter <= 0; -- Reset counter
                 debounced_signal <= noisy; -- Update debounced signal
             end if;
-					  if reset = '0' then
-								-- Synchronous reset
-              counter <= 0; -- Reset counter
-              debounced_signal <= '0'; -- Reset debounced signal
-				   end if;		
+
+            -- Synchronous reset
+            if reset = '0' then
+                counter <= 0; -- Reset counter
+                debounced_signal <= '0'; -- Reset debounced signal
+            end if;
         end if;
     end process;
 

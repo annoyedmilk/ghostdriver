@@ -8,60 +8,56 @@
 # vmap work rtl_work
 # Modifying C:\altera\13.1\modelsim_ase\win32aloem/../modelsim.ini
 # 
-# vlog -vlog01compat -work work +incdir+C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/db {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/db/pll_altpll.v}
+# vlog -vlog01compat -work work +incdir+C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/db {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/db/pll_altpll1.v}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
-# -- Compiling module pll_altpll
+# -- Compiling module pll_altpll1
 # 
 # Top level modules:
-# 	pll_altpll
-# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/debouncer.vhd}
+# 	pll_altpll1
+# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd}
 # Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity debouncer
-# -- Compiling architecture rtl of debouncer
-# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/hvsync_generator.vhd}
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Loading package std_logic_arith
-# -- Loading package STD_LOGIC_UNSIGNED
-# -- Compiling entity hvsync_generator
-# -- Compiling architecture Behavioral of hvsync_generator
-# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/pll.vhd}
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity pll
-# -- Compiling architecture SYN of pll
-# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_control.vhd}
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity car_control
-# -- Compiling architecture Behavioral of car_control
-# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/track_obstacle.vhd}
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity track_obstacle
-# -- Compiling architecture Behavioral of track_obstacle
-# vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/racegame_top.vhd}
-# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity racegame_top
-# -- Compiling architecture rtl of racegame_top
-# -- Loading entity pll
+# -- Compiling entity car_obstacle
+# -- Compiling architecture Behavioral of car_obstacle
+# ** Error: (vcom-11) Could not find work.blue_car_graphic.
 # 
+# ** Error: C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd(25): (vcom-1195) Cannot find expanded name "work.blue_car_graphic".
+# 
+# ** Error: C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd(25): Unknown expanded name.
+# ** Error: (vcom-11) Could not find work.black_car_graphic.
+# 
+# ** Error: C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd(26): (vcom-1195) Cannot find expanded name "work.black_car_graphic".
+# 
+# ** Error: C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd(26): Unknown expanded name.
+# ** Error: (vcom-11) Could not find work.brown_car_graphic.
+# 
+# ** Error: C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd(27): (vcom-1195) Cannot find expanded name "work.brown_car_graphic".
+# 
+# ** Error: C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd(27): Unknown expanded name.
+# ** Error: C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd(30): (vcom-1136) Unknown identifier "blue_car_width".
+# 
+# ** Error: C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd(31): (vcom-1136) Unknown identifier "blue_car_height".
+# 
+# ** Error: C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd(101): VHDL Compiler exiting
+# ** Error: C:/altera/13.1/modelsim_ase/win32aloem/vcom failed.
+# Error in macro ./racegame_run_msim_rtl_vhdl.do line 9
+# C:/altera/13.1/modelsim_ase/win32aloem/vcom failed.
+#     while executing
+# "vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd}"
+rtl.do
+# invalid command name "rtl.do"
+do.rtl
+# invalid command name "do.rtl"
+run rtl.do
+# No Design Loaded!
+do rtl.do
+# Cannot open macro file: rtl.do
+do rtl.do
+# Cannot open macro file: rtl.do
+dataset reload -f
+# wrong number of args for "dataset info".
+# Usage: dataset info <option> <dataset_name>
+# Load canceled

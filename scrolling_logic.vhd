@@ -5,8 +5,8 @@ use ieee.numeric_std.all; -- Import numeric standard package for arithmetic oper
 -- Entity declaration for scrolling logic
 entity scrolling_logic is
     port (
-        clk          : in  std_logic; -- Clock input
-        reset        : in  std_logic; -- Reset signal
+        clk          : in  std_logic;          -- Clock input
+        reset        : in  std_logic;          -- Reset signal
         scroll_speed : in  unsigned(19 downto 0); -- Speed of scrolling
         scroll_offset : out unsigned(9 downto 0) -- Scrolling offset
     );
@@ -35,11 +35,11 @@ begin
                 -- Increment the scroll counter
                 scroll_counter <= scroll_counter + 1;
             end if;
-				    if reset = '0' then
             -- Reset the scroll counter and scroll offset to zero
-            scroll_counter <= (others => '0'); -- Reset scroll counter
-            scroll_offset <= (others => '0'); -- Reset scroll offset
-						end if;
-			end if;
+            if reset = '0' then
+                scroll_counter <= (others => '0'); -- Reset scroll counter
+                scroll_offset <= (others => '0'); -- Reset scroll offset
+            end if;
+        end if;
     end process;
 end Behavioral;

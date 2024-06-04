@@ -56,14 +56,15 @@ begin
                 when 4 => x_pos <= LANE_4; -- Move to lane 4
                 when others => x_pos <= LANE_3; -- Default to lane 3 for safety
             end case;
-				    if reset = '0' then
+
             -- Reset all signals to default values
-            x_pos <= LANE_3; -- Reset position to lane 3
-            lane_index <= 3; -- Reset lane index to 3
-            left_prev <= '0'; -- Reset previous left signal
-            right_prev <= '0'; -- Reset previous right signal
-						end if;
-					end if;
+            if reset = '0' then
+                x_pos <= LANE_3; -- Reset position to lane 3
+                lane_index <= 3; -- Reset lane index to 3
+                left_prev <= '0'; -- Reset previous left signal
+                right_prev <= '0'; -- Reset previous right signal
+            end if;
+        end if;
     end process;
 
     -- Assign the car's horizontal position to the output port

@@ -66,15 +66,16 @@ begin
 
             -- Set LEDs to 1 to ensure they are off by default
             leds <= "00000000"; -- Turn off LEDs
-				    if reset = '0' then
+
             -- Reset all digits and LEDs
-            digit0 <= "0000"; -- Reset units digit
-            digit1 <= "0000"; -- Reset tens digit
-            digit2 <= "0000"; -- Reset hundreds digit
-            digit3 <= "0000"; -- Reset thousands digit
-            leds <= "00000000"; -- Reset LEDs
-						end if;
-			end if;
+            if reset = '0' then
+                digit0 <= "0000"; -- Reset units digit
+                digit1 <= "0000"; -- Reset tens digit
+                digit2 <= "0000"; -- Reset hundreds digit
+                digit3 <= "0000"; -- Reset thousands digit
+                leds <= "00000000"; -- Reset LEDs
+            end if;
+        end if;
     end process;
 
 end Behavioral;
