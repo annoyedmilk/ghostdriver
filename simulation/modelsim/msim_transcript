@@ -1,5 +1,4 @@
 # Reading C:/altera/13.1/modelsim_ase/tcl/vsim/pref.tcl 
-# ERROR: No extended dataflow license exists
 # do racegame_run_msim_rtl_vhdl.do 
 # if {[file exists rtl_work]} {
 # 	vdel -lib rtl_work -all
@@ -47,17 +46,644 @@
 # C:/altera/13.1/modelsim_ase/win32aloem/vcom failed.
 #     while executing
 # "vcom -2008 -work work {C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/car_obstacle.vhd}"
-rtl.do
-# invalid command name "rtl.do"
-do.rtl
-# invalid command name "do.rtl"
-run rtl.do
-# No Design Loaded!
 do rtl.do
-# Cannot open macro file: rtl.do
+# Modifying C:\altera\13.1\modelsim_ase\win32aloem/../modelsim.ini
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package blue_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package red_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package street_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package black_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package brown_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity hvsync_generator
+# -- Compiling architecture Behavioral of hvsync_generator
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity debouncer
+# -- Compiling architecture rtl of debouncer
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity car_control
+# -- Compiling architecture Behavioral of car_control
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity car_obstacle
+# -- Compiling architecture Behavioral of car_obstacle
+# -- Loading package blue_car_graphic
+# -- Loading package black_car_graphic
+# -- Loading package brown_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package red_car_graphic
+# -- Loading package street_graphic
+# -- Compiling entity rendering_logic
+# -- Compiling architecture Behavioral of rendering_logic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity scrolling_logic
+# -- Compiling architecture Behavioral of scrolling_logic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity led_control
+# -- Compiling architecture Behavioral of led_control
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity seven_segment_display
+# -- Compiling architecture Behavioral of seven_segment_display
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity pll
+# -- Compiling architecture SYN of pll
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity racegame_top
+# -- Compiling architecture rtl of racegame_top
+# -- Loading entity pll
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity racegame_top_vhd_tst
+# -- Compiling architecture racegame_top_arch of racegame_top_vhd_tst
+# vsim -displaymsgmode both -gui -msgmode both -t 1ns work.racegame_top_vhd_tst 
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.racegame_top_vhd_tst(racegame_top_arch)
+# Loading ieee.numeric_std(body)
+# Loading work.racegame_top(rtl)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.hvsync_generator(behavioral)
+# Loading work.debouncer(rtl)
+# Loading work.car_control(behavioral)
+# Loading work.blue_car_graphic
+# Loading work.black_car_graphic
+# Loading work.brown_car_graphic
+# Loading work.car_obstacle(behavioral)
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ns  Iteration: 0  Instance: /racegame_top_vhd_tst/i1/car_obstacle_inst File: ../../car_obstacle.vhd
+# Loading work.led_control(behavioral)
+# Loading work.scrolling_logic(behavioral)
+# Loading work.red_car_graphic
+# Loading work.street_graphic
+# Loading work.rendering_logic(behavioral)
+# Loading work.seven_segment_display(behavioral)
+# ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
+#    Time: 0 ns  Iteration: 0  Instance: /racegame_top_vhd_tst/i1/hvsync_gen
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 100 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 100 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 100 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 140 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 140 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 140 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+add wave -position end  sim:/racegame_top_vhd_tst/hsync
+add wave -position end  sim:/racegame_top_vhd_tst/rgb_r
+add wave -position end  sim:/racegame_top_vhd_tst/rgb_g
+add wave -position end  sim:/racegame_top_vhd_tst/rgb_b
+add wave -position end  sim:/racegame_top_vhd_tst/vsync
 do rtl.do
-# Cannot open macro file: rtl.do
-dataset reload -f
-# wrong number of args for "dataset info".
-# Usage: dataset info <option> <dataset_name>
-# Load canceled
+# Modifying C:\altera\13.1\modelsim_ase\win32aloem/../modelsim.ini
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package blue_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package red_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package street_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package black_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package brown_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity hvsync_generator
+# -- Compiling architecture Behavioral of hvsync_generator
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity debouncer
+# -- Compiling architecture rtl of debouncer
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity car_control
+# -- Compiling architecture Behavioral of car_control
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity car_obstacle
+# -- Compiling architecture Behavioral of car_obstacle
+# -- Loading package blue_car_graphic
+# -- Loading package black_car_graphic
+# -- Loading package brown_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package red_car_graphic
+# -- Loading package street_graphic
+# -- Compiling entity rendering_logic
+# -- Compiling architecture Behavioral of rendering_logic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity scrolling_logic
+# -- Compiling architecture Behavioral of scrolling_logic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity led_control
+# -- Compiling architecture Behavioral of led_control
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity seven_segment_display
+# -- Compiling architecture Behavioral of seven_segment_display
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity pll
+# -- Compiling architecture SYN of pll
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity racegame_top
+# -- Compiling architecture rtl of racegame_top
+# -- Loading entity pll
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity racegame_top_vhd_tst
+# -- Compiling architecture racegame_top_arch of racegame_top_vhd_tst
+# vsim -displaymsgmode both -gui -msgmode both -t 1ns work.racegame_top_vhd_tst 
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.racegame_top_vhd_tst(racegame_top_arch)
+# Loading ieee.numeric_std(body)
+# Loading work.racegame_top(rtl)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.hvsync_generator(behavioral)
+# Loading work.debouncer(rtl)
+# Loading work.car_control(behavioral)
+# Loading work.blue_car_graphic
+# Loading work.black_car_graphic
+# Loading work.brown_car_graphic
+# Loading work.car_obstacle(behavioral)
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ns  Iteration: 0  Instance: /racegame_top_vhd_tst/i1/car_obstacle_inst File: ../../car_obstacle.vhd
+# Loading work.led_control(behavioral)
+# Loading work.scrolling_logic(behavioral)
+# Loading work.red_car_graphic
+# Loading work.street_graphic
+# Loading work.rendering_logic(behavioral)
+# Loading work.seven_segment_display(behavioral)
+# ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
+#    Time: 0 ns  Iteration: 0  Instance: /racegame_top_vhd_tst/i1/hvsync_gen
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 100 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 100 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 100 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 140 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 140 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 140 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+add wave -position end  sim:/racegame_top_vhd_tst/hsync
+add wave -position end  sim:/racegame_top_vhd_tst/vsync
+add wave -position end  sim:/racegame_top_vhd_tst/rgb_b
+add wave -position end  sim:/racegame_top_vhd_tst/rgb_g
+add wave -position end  sim:/racegame_top_vhd_tst/rgb_r
+write format wave -window .main_pane.wave.interior.cs.body.pw.wf C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/simulation/modelsim/wave.do
+write format wave -window .main_pane.wave.interior.cs.body.pw.wf C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/simulation/modelsim/wave.do
+do rtl.do
+# Modifying C:\altera\13.1\modelsim_ase\win32aloem/../modelsim.ini
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package blue_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package red_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package street_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package black_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package brown_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity hvsync_generator
+# -- Compiling architecture Behavioral of hvsync_generator
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity debouncer
+# -- Compiling architecture rtl of debouncer
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity car_control
+# -- Compiling architecture Behavioral of car_control
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity car_obstacle
+# -- Compiling architecture Behavioral of car_obstacle
+# -- Loading package blue_car_graphic
+# -- Loading package black_car_graphic
+# -- Loading package brown_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package red_car_graphic
+# -- Loading package street_graphic
+# -- Compiling entity rendering_logic
+# -- Compiling architecture Behavioral of rendering_logic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity scrolling_logic
+# -- Compiling architecture Behavioral of scrolling_logic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity led_control
+# -- Compiling architecture Behavioral of led_control
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity seven_segment_display
+# -- Compiling architecture Behavioral of seven_segment_display
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity pll
+# -- Compiling architecture SYN of pll
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity racegame_top
+# -- Compiling architecture rtl of racegame_top
+# -- Loading entity pll
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity racegame_top_vhd_tst
+# -- Compiling architecture racegame_top_arch of racegame_top_vhd_tst
+# vsim -displaymsgmode both -gui -msgmode both -t 1ns work.racegame_top_vhd_tst 
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.racegame_top_vhd_tst(racegame_top_arch)
+# Loading ieee.numeric_std(body)
+# Loading work.racegame_top(rtl)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.hvsync_generator(behavioral)
+# Loading work.debouncer(rtl)
+# Loading work.car_control(behavioral)
+# Loading work.blue_car_graphic
+# Loading work.black_car_graphic
+# Loading work.brown_car_graphic
+# Loading work.car_obstacle(behavioral)
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ns  Iteration: 0  Instance: /racegame_top_vhd_tst/i1/car_obstacle_inst File: ../../car_obstacle.vhd
+# Loading work.led_control(behavioral)
+# Loading work.scrolling_logic(behavioral)
+# Loading work.red_car_graphic
+# Loading work.street_graphic
+# Loading work.rendering_logic(behavioral)
+# Loading work.seven_segment_display(behavioral)
+# ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
+#    Time: 0 ns  Iteration: 0  Instance: /racegame_top_vhd_tst/i1/hvsync_gen
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 100 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 100 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 100 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 140 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 140 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 140 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+do rtl.do
+# Modifying C:\altera\13.1\modelsim_ase\win32aloem/../modelsim.ini
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package blue_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package red_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package street_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package black_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package brown_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity hvsync_generator
+# -- Compiling architecture Behavioral of hvsync_generator
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity debouncer
+# -- Compiling architecture rtl of debouncer
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity car_control
+# -- Compiling architecture Behavioral of car_control
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity car_obstacle
+# -- Compiling architecture Behavioral of car_obstacle
+# -- Loading package blue_car_graphic
+# -- Loading package black_car_graphic
+# -- Loading package brown_car_graphic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package red_car_graphic
+# -- Loading package street_graphic
+# -- Compiling entity rendering_logic
+# -- Compiling architecture Behavioral of rendering_logic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity scrolling_logic
+# -- Compiling architecture Behavioral of scrolling_logic
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity led_control
+# -- Compiling architecture Behavioral of led_control
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity seven_segment_display
+# -- Compiling architecture Behavioral of seven_segment_display
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity pll
+# -- Compiling architecture SYN of pll
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity racegame_top
+# -- Compiling architecture rtl of racegame_top
+# -- Loading entity pll
+# Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity racegame_top_vhd_tst
+# -- Compiling architecture racegame_top_arch of racegame_top_vhd_tst
+# vsim -displaymsgmode both -gui -msgmode both -t 1ns work.racegame_top_vhd_tst 
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.racegame_top_vhd_tst(racegame_top_arch)
+# Loading ieee.numeric_std(body)
+# Loading work.racegame_top(rtl)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.hvsync_generator(behavioral)
+# Loading work.debouncer(rtl)
+# Loading work.car_control(behavioral)
+# Loading work.blue_car_graphic
+# Loading work.black_car_graphic
+# Loading work.brown_car_graphic
+# Loading work.car_obstacle(behavioral)
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ns  Iteration: 0  Instance: /racegame_top_vhd_tst/i1/car_obstacle_inst File: ../../car_obstacle.vhd
+# Loading work.led_control(behavioral)
+# Loading work.scrolling_logic(behavioral)
+# Loading work.red_car_graphic
+# Loading work.street_graphic
+# Loading work.rendering_logic(behavioral)
+# Loading work.seven_segment_display(behavioral)
+# ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
+#    Time: 0 ns  Iteration: 0  Instance: /racegame_top_vhd_tst/i1/hvsync_gen
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 20 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 60 ns  Iteration: 2  Instance: /racegame_top_vhd_tst/i1/render_ctrl
+run 5sec
+write format wave -window .main_pane.wave.interior.cs.body.pw.wf C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/simulation/modelsim/wave.do
+# Printing not supported.
+add wave -position end  sim:/racegame_top_vhd_tst/Segment0
+write format wave -window .main_pane.wave.interior.cs.body.pw.wf C:/Users/Andon_Projekt/Documents/Schule/FPGA/racegame/simulation/modelsim/wave.do
