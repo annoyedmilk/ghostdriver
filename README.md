@@ -1,4 +1,4 @@
-# VHDL Race Game
+# VHDL Race Game: Ghost Driver
 
 This project implements a simple car racing game using VHDL (VHSIC Hardware Description Language) for FPGA (Field-Programmable Gate Array) implementation. The game features a car that can be moved left and right to avoid obstacles, a scrolling background, and a score display.
 
